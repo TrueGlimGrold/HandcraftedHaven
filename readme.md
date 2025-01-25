@@ -2,7 +2,7 @@ Validation & Error Handling : Arnold
 
 - Work on 404,500,400, Errors
 - Data Schema
--
+- Validation Server & Client
 
 Database & CRUD : Luke
 
