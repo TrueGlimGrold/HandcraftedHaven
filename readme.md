@@ -1,4 +1,6 @@
-Validation & Error Handling (Arnold)
+Team Work Assignments : 
+Validation & Error Handling (Arnold) :
+
 Task 1: Implement a 404 (Not Found) error page for invalid routes or resources.
 
 Task 2: Create a 500 (Internal Server Error) page to handle server-side errors gracefully.
