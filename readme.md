@@ -1,61 +1,84 @@
-Team Work Assignments : 
-Validation & Error Handling (Arnold) :
+# Project Task Breakdown
 
-Task 1: Implement a 404 (Not Found) error page for invalid routes or resources.
+This document outlines the tasks assigned to each team member for the project. The tasks are divided into categories based on responsibilities.
 
-Task 2: Create a 500 (Internal Server Error) page to handle server-side errors gracefully.
+---
 
-Task 3: Develop a 400 (Bad Request) error handler for invalid client requests.
+## **Validation & Error Handling (Arnold)**
 
-Task 4: Set up middleware for server-side validation of incoming requests (e.g., checking for required fields, data types, etc.).
+1. Implement a 404 (Not Found) error page for invalid routes or resources.
+2. Create a 500 (Internal Server Error) page to handle server-side errors gracefully.
+3. Develop a 400 (Bad Request) error handler for invalid client requests.
+4. Set up middleware for server-side validation of incoming requests (e.g., checking for required fields, data types, etc.).
+5. Implement client-side validation for forms and inputs to prevent invalid data submission.
+6. Write unit tests for error handling and validation logic to ensure robustness.
 
-Task 5: Implement client-side validation for forms and inputs to prevent invalid data submission.
+---
 
-Task 6: Write unit tests for error handling and validation logic to ensure robustness.
+## **Data Schema (Arnold)**
 
-Data Schema (Arnold)
-Task 7: Define and document the data schema for the application (e.g., fields, data types, relationships).
+7. Define and document the data schema for the application (e.g., fields, data types, relationships).
+8. Validate data against the schema before saving it to the database.
 
-Task 8: Validate data against the schema before saving it to the database.
+---
 
-Database & CRUD (Luke)
-Task 9: Set up the database (e.g., MongoDB, PostgreSQL) and configure the connection.
+## **Database & CRUD (Luke)**
 
-Task 10: Implement CRUD (Create, Read, Update, Delete) operations for the Products collection/table.
+9. Set up the database (e.g., MongoDB, PostgreSQL) and configure the connection.
+10. Implement CRUD (Create, Read, Update, Delete) operations for the `Products` collection/table.
+11. Write database queries and ensure they are optimized for performance.
+12. Create scripts for database seeding and migrations.
 
-Task 11: Write database queries and ensure they are optimized for performance.
+---
 
-Task 12: Create scripts for database seeding and migrations.
+## **Products (Luke)**
 
-Products (Luke)
-Task 13: Design the database schema for the Products entity (e.g., name, price, description, etc.).
+13. Design the database schema for the `Products` entity (e.g., name, price, description, etc.).
+14. Develop API endpoints for managing products (e.g., GET, POST, PUT, DELETE).
+15. Implement search and filtering functionality for products.
 
-Task 14: Develop API endpoints for managing products (e.g., GET, POST, PUT, DELETE).
+---
 
-Task 15: Implement search and filtering functionality for products.
+## **Theme and CSS (Henry)**
 
-Theme and CSS (Henry)
-Task 16: Design and implement a consistent theme for the application (e.g., color scheme, typography).
+16. Design and implement a consistent theme for the application (e.g., color scheme, typography).
+17. Create reusable CSS components (e.g., buttons, cards, modals) for the front end.
+18. Ensure the application is responsive and works seamlessly across devices (mobile, tablet, desktop).
+19. Style error pages (404, 500, 400) to match the application’s theme.
 
-Task 17: Create reusable CSS components (e.g., buttons, cards, modals) for the front end.
+---
 
-Task 18: Ensure the application is responsive and works seamlessly across devices (mobile, tablet, desktop).
+## **User Stories & Login (Elisa)**
 
-Task 19: Style error pages (404, 500, 400) to match the application’s theme.
+20. Write detailed user stories for all features (e.g., login, product management, error handling).
+21. Implement user authentication and login functionality (e.g., using JWT or OAuth).
+22. Create user roles and permissions (e.g., admin, customer) and enforce them across the application.
+23. Develop a user registration flow with validation and error handling.
 
-User Stories & Login (Elisa)
-Task 20: Write detailed user stories for all features (e.g., login, product management, error handling).
+---
 
-Task 21: Implement user authentication and login functionality (e.g., using JWT or OAuth).
+## **ENV File & Configuration (Elisa)**
 
-Task 22: Create user roles and permissions (e.g., admin, customer) and enforce them across the application.
+24. Set up the `.env` file to store sensitive configuration data (e.g., API keys, database credentials).
+25. Ensure environment variables are properly loaded and used in the application.
 
-Task 23: Develop a user registration flow with validation and error handling.
+---
 
-ENV File & Configuration (Elisa)
-Task 24: Set up the .env file to store sensitive configuration data (e.g., API keys, database credentials).
+## **General Tasks**
 
-Task 25: Ensure environment variables are properly loaded and used in the application.
+26. Conduct code reviews and ensure all tasks are integrated smoothly.
+27. Write documentation for the application, including setup instructions and API usage.
+28. Perform end-to-end testing to ensure all features work as expected.
 
+---
 
-Deligation of the project with active group member as per week 3 Meeting.
+## **Team Members**
+
+- **Arnold**: Validation, Error Handling, Data Schema
+- **Luke**: Database, CRUD, Products
+- **Henry**: Theme, CSS
+- **Elisa**: User Stories, Login, ENV File
+
+---
+
+This README will be updated as the project progresses. For any questions or clarifications, please contact the respective team member.
