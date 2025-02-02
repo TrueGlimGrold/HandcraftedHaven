@@ -17,7 +17,7 @@ export default function RootLayout({
               <Link href="/" className=""> Theme ☀️/🌑</Link>
               <Link href="/" className="">Home</Link>
               <Link href="/" className="">Shop</Link>
-              <Link href="/" className="">Login🤵</Link>
+              <Link href="/login" className="">Login🤵</Link>
             </nav>
           </div>
         </header>
