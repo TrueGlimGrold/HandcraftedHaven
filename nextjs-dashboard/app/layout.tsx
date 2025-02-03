@@ -2,6 +2,11 @@ import Link from "next/link";
 import "../styles/globals.css";
 import { ReactNode } from "react";
 
+export const metadata = {
+  title: "Handcrafted Haven",
+  description: "A curated collection of artisanal and handmade products to enrich your life.",
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -9,6 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+
       <head>
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
