@@ -1,16 +1,73 @@
+import Link from 'next/link';
+import "../styles/globals.css";
 import React from 'react';
 
 const Page = () => {
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-content">
-          <h1>Welcome to Our Store!</h1>
-          <p>Discover our collections.</p>
-          <button className="shop-now-btn">Shop Now</button>
+    <div className="shopping-div">
+      <div className="shopping-product-container">
+        {/* <img></img> */}
+        Ratings: (stars)
+        Name: (Name)
+        Age: (Age)
+        Artist: (Artist)
+        Style: (Style)
+        Category: (Category)
+        Price: (Price)
+        Status: (Status)
+        <div className="buttons-row">
+          <Link href="/"> Learn More </Link>
+          <Link href="/"> Reveiws </Link>
         </div>
-      </section>
+      </div>
+
+      <div className="shopping-product-container">
+        {/* <img></img> */}
+        Ratings: (stars)
+        Name: (Name)
+        Age: (Age)
+        Artist: (Artist)
+        Style: (Style)
+        Category: (Category)
+        Price: (Price)
+        Status: (Status)
+        <div className="buttons-row">
+          <Link href="/"> Learn More </Link>
+          <Link href="/"> Reveiws </Link>
+        </div>
+      </div>
+
+      <div className="shopping-product-container">
+        {/* <img></img> */}
+        Ratings: (stars)
+        Name: (Name)
+        Age: (Age)
+        Artist: (Artist)
+        Style: (Style)
+        Category: (Category)
+        Price: (Price)
+        Status: (Status)
+        <div className="buttons-row">
+          <Link href="/"> Learn More </Link>
+          <Link href="/"> Reveiws </Link>
+        </div>
+      </div>
+
+      <div className="shopping-product-container">
+        {/* <img></img> */}
+        Ratings: (stars)
+        Name: (Name)
+        Age: (Age)
+        Artist: (Artist)
+        Style: (Style)
+        Category: (Category)
+        Price: (Price)
+        Status: (Status)
+        <div className="buttons-row">
+          <Link href="/"> Learn More </Link>
+          <Link href="/"> Reveiws </Link>
+        </div>
+      </div>
     </div>
   );
 };

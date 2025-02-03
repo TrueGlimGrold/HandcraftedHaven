@@ -1,22 +1,31 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next';
+import React from 'react';
+import Link from 'next/link';
+import "../../styles/globals.css";
 
 export const metadata: Metadata = {
     title: 'Login',
 };
+
 export default function LoginPage() {
-    return (
-        <main className="flex items-center justify-center md:h-screen">
-            <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
-                <div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3 md:h-36">
-                    <div className="w-32 text-white md:w-36">
-                        {/*<AcmeLogo /> uncomment this*/}
-                    </div>
-                </div>
-                <Suspense>
-                    {/*<LoginForm /> uncomment this*/}
-                </Suspense>
-            </div>
-        </main>
-    );
+  return (
+    <div className="login-container">
+      <h1>Login</h1>
+      <form className="login-form">
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input type="username" id="username" name="username" placeholder="Enter Your usernme" required />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter Your Password" minLength={6} required />
+        </div>
+        <button type="submit" className="login-button">Login</button>
+      </form>
+      <p className="signup-link">
+        Don't have an account? <Link href="/signup">Sign up</Link>
+      </p>
+    </div>
+  );
 }

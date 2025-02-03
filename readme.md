@@ -1,3 +1,10 @@
+# Project Time Line
+
+1. Week 4- Initial code and file structure  
+2. Week 5- Deploy locally & Debug and & Test the WCGA 2.1 and CSS Guidelines.
+3. Week 6- Wrap Up the project deploy into vercel debug last minute fixes.
+4. Week 7- Submission to Canvas.
+
 # Project Task Breakdown
 
 This document outlines the tasks assigned to each team member for the project. The tasks are divided into categories based on responsibilities.
