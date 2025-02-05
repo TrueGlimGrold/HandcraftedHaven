@@ -1,146 +1,54 @@
+"use client" ; //must use client as it is client's response to give the cureent theme to the app
 import Link from "next/link";
+import { ReactNode, useState, useEffect } from "react";
 import "../styles/globals.css";
-import { ReactNode } from "react";
 
-export const metadata = {
-  title: "Handcrafted Haven",
-  description: "A curated collection of artisanal and handmade products to enrich your life.",
-};
+export default function RootLayout({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState("light");
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme") || "light";
+    setTheme(storedTheme);
+    document.documentElement.setAttribute("data-theme", storedTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+  };
+
   return (
-    <html lang="en">
+      <html lang="en">
 
-      <head>
-        <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-        </style>
-      </head>
-      <body className="">
-        <header className="">
-          <div className="">
-            <h1 className="roboto title header-title">Handcrafted Haven</h1>
-            <nav className="header-links">
-              <Link href="/" className="inter">Theme ☀️/🌑</Link> {/*This has to be a button / toggle for theme swtiching to day or night*/}
-              <Link href="/" className="inter">Home</Link>
-              <Link href="/HCH-Home/shop" className="inter">Shop</Link>
-              <Link href="/login" className="inter">Login🤵</Link>
-            </nav>
-          </div>
-        </header>
-        <main className="">
-          {children}
-        </main>
-        <footer className="">
-          <h1 className="roboto title footer-title">Handcrafted Haven</h1>
-          <div className="footer-bottom">
-            <p className="inter copyright">&copy; Handcrafted Haven {new Date().getFullYear()} | WDD430</p>
-            <p className="inter"> Become A Seller</p>
-            <Link href="/" className="inter">About Us</Link>
-            <Link href="/" className="inter">Theme ☀️/🌑</Link>
-          </div>
-        </footer>
+      <body>
+      <header>
+        <div>
+          <h1 className="title">Handcrafted Haven</h1>
+          <nav>
+            <button onClick={toggleTheme} style={{ cursor: "pointer", padding: "5px 10px" }}>
+              {theme === "light" ? "🌑 Dark Mode" : "☀️ Light Mode"}
+            </button>
+            <Link href="/HCH-Home">Home</Link>
+            <Link href="/HCH-Home/shop">Shop</Link>
+            <Link href="/login">Login 🤵</Link>
+          </nav>
+        </div>
+      </header>
+      <main>{children}</main>
+      <footer>
+        <h1 className="title">Handcrafted Haven</h1>
+        <div>
+          <p>&copy; {new Date().getFullYear()} Handcrafted Haven | WDD430</p>
+          <p>Become A Seller</p>
+          <Link href="/about">About Us</Link>
+          <button onClick={toggleTheme} style={{ cursor: "pointer", padding: "5px 10px" }}>
+            {theme === "light" ? "🌑 Dark Mode" : "☀️ Light Mode"}
+          </button>
+        </div>
+      </footer>
       </body>
-    </html>
-
-    // Logged in user
-
-    // <html lang="en">
-    // <style>
-    // @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-    // </style>
-    // <body className="">
-    //   <header className="">
-    //     <div className="">
-    //       <Link href="/" className="roboto title header-title">Theme ☀️/🌑</Link>
-    //       <h1 className="">Handcrafted Haven</h1>
-    //       <nav className="header-links">
-    //         <Link href="/" className="inter">Artist</Link>
-    //         <Link href="/" className="inter">Price</Link>
-    //         <Link href="/" className="inter">Age(Time)</Link>
-    //         <Link href="/" className="inter">Category</Link>
-    //       </nav>
-    //       <nav className="">
-    //        <Link href="/" className="inter">
-    //          <p>🏠</p>
-    //          <p>Home</p>
-    //        </Link>
-    //        <Link href="/" className="inter">
-    //          <p>🛒</p>
-    //          <p>Shop</p>
-    //        </Link>
-    //        <Link href="/" className="inter">
-    //          <p>🤵</p>
-    //          <p>Shop</p>
-    //        </Link>
-    //       </nav>
-    //     </div>
-    //   </header>
-    //   <main className="">
-    //     {children}
-    //   </main>
-    //   <footer className="">
-    //     <h1 className="roboto title footer-title">Handcrafted Haven</h1>
-    //     <div className="footer-bottom">
-    //       <p className="inter copyright">&copy; Handcrafted Haven {new Date().getFullYear()} | WDD430</p>
-    //       <p className="inter"> Become A Seller</p>
-    //       <Link href="/" className="inter"> About Us</Link>
-    //       <Link href="/" className="inter"> Theme ☀️/🌑</Link>
-    //     </div>
-    //   </footer>
-    // </body>
-    // </html>
-
-    // Logged in administrator
-
-    // <html lang="en">
-    // <style>
-    // @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-    // </style>
-    // <body className="">
-    //   <header className="">
-    //     <div className="">
-    //       <Link href="/" className="inter">Theme ☀️/🌑</Link>
-    //       <h1 className="roboto title header-title">Handcrafted Haven</h1>
-    //       <nav className="">
-    //         <Link href="/" className="inter">My Products</Link>
-    //         <Link href="/" className="inter">Reveiws</Link>
-    //         <Link href="/" className="inter">Manage</Link>
-    //         <Link href="/" className="inter">Category</Link>
-    //       </nav>
-    //       <nav className="">
-    //        <Link href="/" className="inter">
-    //          <p>🏠</p>
-    //          <p>Home</p>
-    //        </Link>
-    //        <Link href="/" className="inter">
-    //          <p>🛒</p>
-    //          <p>Shop</p>
-    //        </Link>
-    //        <Link href="/" className="inter">
-    //          <p>🤵</p>
-    //          <p>Shop</p>
-    //        </Link>
-    //       </nav>
-    //     </div>
-    //   </header>
-    //   <main className="">
-    //     {children}
-    //   </main>
-    //   <footer className="">
-    //     <h1 className="roboto title footer-title">Handcrafted Haven</h1>
-    //     <div className="footer-bottom">
-    //       <p className="inter copyright">&copy; Handcrafted Haven {new Date().getFullYear()} | WDD430</p>
-    //       <p className="inter"> Become A Seller</p>
-    //       <Link href="/" className="inter"> About Us</Link>
-    //       <Link href="/" className="inter"> Theme ☀️/🌑</Link>
-    //     </div>
-    //   </footer>
-    // </body>
-    // </html>
+      </html>
   );
 }

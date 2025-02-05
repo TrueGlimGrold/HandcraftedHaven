@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Metadata } from 'next';
 import React from 'react';
 import Link from 'next/link';
-import "../../styles/globals.css";
+import "/styles/globals.css";
 
 export const metadata: Metadata = {
     title: 'Login',
