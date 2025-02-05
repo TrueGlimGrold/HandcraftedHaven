@@ -16,7 +16,7 @@ const Page = () => {
         <p>Price: (Price)</p>
         <p>Status: (Status)</p>
         <div className="buttons-row">
-          <Link href="/" className="link-button"> Learn More </Link>
+          <Link href="/products" className="link-button"> Learn More </Link>
           <Link href="/" className="link-button"> Reveiws </Link>
         </div>
       </div>
