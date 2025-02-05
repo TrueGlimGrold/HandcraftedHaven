@@ -1,17 +1,35 @@
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 header, footer {
-    background-color: #636940;
-    color: white;
-    padding: 15px;
-    margin: 5px;
-  }
+  background-color: #636940;
+  color: white;
+  padding: 15px;
+}
+
+main {
+  flex: 1; /* This makes the main content grow and take up remaining space */
+}
+
+footer {
+  margin-top: auto; /* This ensures footer sticks at the bottom when content is short */
+}
   
-  .roboto {
-    font-family: "Roboto", serif;
-  }
-  
-  .inter {
-    font-family: "Inter", serif;
-  }
+.roboto {
+  font-family: "Roboto", serif;
+}
+
+.inter {
+  font-family: "Inter", serif;
+}
   
   .header-links {
     display: flex;
@@ -153,15 +171,54 @@ header, footer {
     justify-content: center;
     align-items: center;
   }
-
-  footer {
-    padding-bottom: 0px;
-  }
   
   .footer-title {
     margin: 0px;
   }
 
+
+  /* I tried to make a layout with a shopping-body, but it created two footers */
+
+.shopping-body {
+  background-color: #9BDEAC;
+}
+
+.shopping-div {
+  height: 100%;
+  display: grid; 
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 50% 50%;
+}
+
+.shopping-product-container {
+  background-color: #885A5A;
+  margin: 10px;
+  padding: 15px;
+  color: white;
+}
+
+.shopping-product-container p {
+  margin: 0px;
+  font-size: 12px;
+}
+
+.link-button{
+  color: #272626;
+  text-decoration: none;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  width: 120px;
+  text-align: center;
+  margin-top: 15px;
+  width: 80px;
+}
+
+.buttons-row {
+  display: flex;
+  justify-content: space-around;
+}
+=======
 /* Product Skeleton Styles */
 .skeleton-container {
   position: relative;
@@ -250,3 +307,4 @@ header, footer {
   gap: 1.5rem;
   padding: 1.5rem;
 }
+
