@@ -31,30 +31,30 @@ footer {
   font-family: "Inter", serif;
 }
   
-  .header-links {
-    display: flex;
-    justify-content: space-between;
-    padding: 0% 10% 0% 10%
-  }
-  
-  .header-links a{
-    color: #272626;
-    text-decoration: none;
-    background-color: white;
-    border-radius: 5px;
-    padding: 5px;
-    width: 120px;
-    text-align: center;
-    margin-top: 15px;
-  }
-  
-  .title {
-    text-align: center;
-  }
-  
-  .header-title {
-    margin: 0px;
-  }
+.header-links {
+  display: flex;
+  justify-content: space-between;
+  padding: 0% 10% 0% 10%
+}
+
+.header-links a{
+  color: #272626;
+  text-decoration: none;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  width: 120px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.title {
+  text-align: center;
+}
+
+.header-title {
+  margin: 0px;
+}
 
 /*Styling for home page content*/
 .home-screen {
@@ -169,8 +169,7 @@ max-width: 300px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 350px;
-  display: flex;
-  flex-direction: column;
+  margin-left: 35%;
 }
 
 /* Form groups for label and input */
