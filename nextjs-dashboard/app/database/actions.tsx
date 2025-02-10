@@ -8,7 +8,7 @@ import bcrypt from 'bcryptjs';
 //import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 //import { signIn } from '@/auth'; //Elisha Login
-//import { AuthError } from 'next-auth'; // Signups Autentication. This is commented out since we are using supabase authentication instead of next-auth.
+// import { AuthError } from 'next-auth'; // Signups Autentication. This is commented out since we are using supabase authentication instead of next-auth.
 
 export async function authenticate(prevState: string | undefined, formData: FormData) {
     const email = formData.get('email') as string;
