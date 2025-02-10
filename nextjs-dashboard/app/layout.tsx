@@ -26,7 +26,7 @@ export default function RootLayout({
             <h1 className="roboto title header-title">Handcrafted Haven</h1>
             <nav className="header-links">
               <Link href="/" className="inter">Theme ☀️/🌑</Link> {/*This has to be a button / toggle for theme swtiching to day or night*/}
-              <Link href="/" className="inter">Home</Link>
+              <Link href="/HCH-Home/shop/home" className="inter">Home</Link>
               <Link href="/HCH-Home/shop" className="inter">Shop</Link>
               <Link href="/login" className="inter">Login🤵</Link>
             </nav>
