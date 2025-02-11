@@ -1,5 +1,8 @@
-/*import NextAuthConfig from 'next-auth';
+import NextAuthConfig from 'next-auth';
 
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
 export const authConfig = {
     pages: {
         signIn: "/login", // Custom login page if needed
@@ -7,7 +10,9 @@ export const authConfig = {
       session: {
         strategy: "jwt", // Use JWT for session management
     },
+    
     callbacks: {
+
         async jwt({ token, user }) {
           if (user) {
             // Add custom user fields to the JWT token
@@ -28,4 +33,4 @@ export const authConfig = {
       },
       secret: process.env.JWT_SECRET, // Use a secret for JWT signing
     };
-*/
+

@@ -1,14 +1,13 @@
 // Contains the operations code for CRUD and calidation .
 
-
 'use server';
 import { supabase } from './supabaseClient';
 import bcrypt from 'bcryptjs';
-//import { z } from 'zod';
+// import { z } from 'zod';
 //import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-//import { signIn } from '@/auth'; //Elisha Login
-// import { AuthError } from 'next-auth'; // Signups Autentication. This is commented out since we are using supabase authentication instead of next-auth.
+// import { signIn } from '@/auth'; //Elisha Login
+//import { AuthError } from 'next-auth'; // Signups Autentication. This is commented out since we are using supabase authentication instead of next-auth.
 
 export async function authenticate(prevState: string | undefined, formData: FormData) {
     const email = formData.get('email') as string;
@@ -34,7 +33,7 @@ export async function authenticate(prevState: string | undefined, formData: Form
             .select('privilege')
             .eq('email', email)
             .single() as { data: UserType | null, error: any};
-
+ 
         if (userError || !userData) {
             console.log('Error fetching user role:', userError?.message); //3. log user role error
 

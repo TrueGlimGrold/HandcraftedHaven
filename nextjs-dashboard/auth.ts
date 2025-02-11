@@ -1,9 +1,9 @@
-/*import NextAuth from "next-auth";-
+import NextAuth from "next-auth";
 import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
-import type { User } from '@/app/database/defitiontype';
+import type { User } from './app/database/definitiontype';
 import bcrypt from  'bcrypt';
 
 //function to get user and login them in.
@@ -42,4 +42,3 @@ export const { auth, signIn, signOut } = NextAuth({
     ],
 });
 
-*/

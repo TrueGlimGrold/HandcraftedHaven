@@ -10,7 +10,7 @@ async function fetchProductsQuery() {
     `;
 }
 
-async function insertProductQuery(product) {
+async function insertProductQuery(product: { id: any; product_name: any; image_url: any; rating: any; age: any; artist: any; style: any; category: any; price: any; status: any; description: any; reviews: any; }) {
     const { id, product_name, image_url, rating, age, artist, style, category, price, status, description, reviews } = product;
     return client.sql`
         INSERT INTO products (id, product_name, image_url, rating, age, artist, style, category, price, status, description, reviews)
@@ -19,7 +19,7 @@ async function insertProductQuery(product) {
     `;
 }
 
-async function updateProductQuery(id, product) {
+async function updateProductQuery(id: string | number | boolean | null | undefined, product: { product_name: any; image_url: any; rating: any; age: any; artist: any; style: any; category: any; price: any; status: any; description: any; reviews: any; }) {
     const { product_name, image_url, rating, age, artist, style, category, price, status, description, reviews } = product;
     return client.sql`
         UPDATE products
@@ -28,7 +28,7 @@ async function updateProductQuery(id, product) {
     `;
 }
 
-async function deleteProductQuery(id) {
+async function deleteProductQuery(id: string | number | boolean | null | undefined) {
     return client.sql`
         DELETE FROM products WHERE id = ${id};
     `;
@@ -45,7 +45,7 @@ async function listProducts() {
     }
 }
 
-async function addProduct(product) {
+async function addProduct(product: { id: any; product_name: any; image_url: any; rating: any; age: any; artist: any; style: any; category: any; price: any; status: any; description: any; reviews: any; }) {
     try {
         await insertProductQuery(product);
         return { message: "Product added successfully" };
@@ -55,7 +55,7 @@ async function addProduct(product) {
     }
 }
 
-async function updateProduct(id, product) {
+async function updateProduct(id: string | number | boolean | null | undefined, product: { product_name: any; image_url: any; rating: any; age: any; artist: any; style: any; category: any; price: any; status: any; description: any; reviews: any; }) {
     try {
         await updateProductQuery(id, product);
         return { message: "Product updated successfully" };
@@ -65,7 +65,7 @@ async function updateProduct(id, product) {
     }
 }
 
-async function deleteProduct(id) {
+async function deleteProduct(id: any) {
     try {
         await deleteProductQuery(id);
         return { message: "Product deleted successfully" };
@@ -85,7 +85,7 @@ export async function GET() {
     }
 }
 
-export async function POST(request) {
+export async function POST(request: { json: () => any; }) {
     try {
         const product = await request.json();
         const response = await addProduct(product);
@@ -95,7 +95,7 @@ export async function POST(request) {
     }
 }
 
-export async function PUT(request) {
+export async function PUT(request: { json: () => PromiseLike<{ [x: string]: any; id: any; }> | { [x: string]: any; id: any; }; }) {
     try {
         const { id, ...product } = await request.json();
         const response = await updateProduct(id, product);
@@ -105,7 +105,7 @@ export async function PUT(request) {
     }
 }
 
-export async function DELETE(request) {
+export async function DELETE(request: { json: () => PromiseLike<{ id: any; }> | { id: any; }; }) {
     try {
         const { id } = await request.json();
         const response = await deleteProduct(id);

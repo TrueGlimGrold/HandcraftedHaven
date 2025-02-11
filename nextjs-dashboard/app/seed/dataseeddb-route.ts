@@ -97,7 +97,7 @@ export async function GET() {
         return Response.json({ message: 'Database seeded successfully' });
     } catch (error) {
         await client.sql`ROLLBACK`;
-        // @ts-ignore // ignore this for now as we need to run this code only once
+        //@ts-expect-error // ignore this for now as we need to run this code only once
         return Response.json({ error: error.message }, { status: 500 });
     }
 }
