@@ -81,7 +81,7 @@ export async function GET() {
         const products = await listProducts();
         return Response.json(products);
     } catch (error) {
-        return Response.json({ error: error.message }, { status: 500 });
+        return Response.json({ error: "An unknown error occurred" }, { status: 500 });
     }
 }
 
@@ -91,17 +91,25 @@ export async function POST(request: { json: () => any; }) {
         const response = await addProduct(product);
         return Response.json(response);
     } catch (error) {
-        return Response.json({ error: error.message }, { status: 500 });
+        return Response.json({ error: "An unknown error occurred" }, { status: 500 });
     }
 }
-
-export async function PUT(request: { json: () => PromiseLike<{ [x: string]: any; id: any; }> | { [x: string]: any; id: any; }; }) {
+export async function PUT(request: Request) {
     try {
-        const { id, ...product } = await request.json();
+        const body = await request.json();
+
+        if (!body.id) {
+            return Response.json({ error: "Product ID is required" }, { status: 400 });
+        }
+
+        const { id, ...product } = body;
         const response = await updateProduct(id, product);
         return Response.json(response);
     } catch (error) {
-        return Response.json({ error: error.message }, { status: 500 });
+        if (error instanceof Error) {
+            return Response.json({ error: error.message }, { status: 500 });
+        }
+        return Response.json({ error: "An unknown error occurred" }, { status: 500 });
     }
 }
 
@@ -111,6 +119,6 @@ export async function DELETE(request: { json: () => PromiseLike<{ id: any; }> | 
         const response = await deleteProduct(id);
         return Response.json(response);
     } catch (error) {
-        return Response.json({ error: error.message }, { status: 500 });
+        return Response.json({ error: "An unknown error occurred" }, { status: 500 });
     }
 }

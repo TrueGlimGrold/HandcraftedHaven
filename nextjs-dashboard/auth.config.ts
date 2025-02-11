@@ -1,8 +1,7 @@
 import NextAuthConfig from 'next-auth';
 
 // @ts-ignore
-// @ts-ignore
-// @ts-ignore
+
 export const authConfig = {
     pages: {
         signIn: "/login", // Custom login page if needed

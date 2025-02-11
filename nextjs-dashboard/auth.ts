@@ -7,15 +7,21 @@ import type { User } from './app/database/definitiontype';
 import bcrypt from  'bcrypt';
 
 //function to get user and login them in.
-async function getUser(email: string): Promise<User |undefined> {
-    try {
-        const user = await sql<User>`SELECT * FROM Users WHERE email=${email}`;
-        return user.rows[0];
-    } catch (error) {
-        console.error('Failed to fetch user:', error);
-        throw new Error('Failed to fetch user.');
+import { JWT } from "next-auth/jwt";
+
+export default {
+    callbacks: {
+        async jwt({ token, user }: { token: JWT; user?: User }) {
+            if (user) {
+                // Add custom user fields to the JWT token
+                token.id = user.id;
+                token.email = user.email;
+            }
+            return token;
+        }
     }
-}
+};
+
 
 export const { auth, signIn, signOut } = NextAuth({
     ...authConfig,
