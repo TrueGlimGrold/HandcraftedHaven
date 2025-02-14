@@ -1,0 +1,148 @@
+Index: nextjs-dashboard/auth.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import NextAuth from \"next-auth\";\r\nimport { authConfig } from './auth.config';\r\nimport Credentials from 'next-auth/providers/credentials';\r\nimport { z } from 'zod';\r\nimport { sql } from '@vercel/postgres';\r\nimport type { User } from './app/database/definitiontype';\r\nimport bcrypt from  'bcrypt';\r\n\r\n//function to get user and login them in.\r\nimport { JWT } from \"next-auth/jwt\";\r\n\r\nexport default {\r\n    callbacks: {\r\n        async jwt({ token, user }: { token: JWT; user?: User }) {\r\n            if (user) {\r\n                // Add custom user fields to the JWT token\r\n                token.id = user.id;\r\n                token.email = user.email;\r\n            }\r\n            return token;\r\n        }\r\n    }\r\n};\r\n\r\n\r\nexport const { auth, signIn, signOut } = NextAuth({\r\n    ...authConfig,\r\n    providers: [\r\n      Credentials({\r\n          async authorize(credentials) {\r\n              const parsedCredentials = z\r\n                  .object({ email: z.string().email(), password: z.string().min(6) })\r\n                  .safeParse(credentials);\r\n  \r\n              if (parsedCredentials.success) {\r\n                  const { email, password } = parsedCredentials.data;\r\n                  const user = await getUser(email);\r\n                  if (!user) return null;\r\n                  const passwordsMatch = await bcrypt.compare(password, user.password);\r\n  \r\n                  if (passwordsMatch) return user;\r\n                  }\r\n          \r\n              console.log('Invalid Credentials');\r\n              return null;\r\n            },\r\n        }),\r\n    ],\r\n});\r\n\r\n
+===================================================================
+diff --git a/nextjs-dashboard/auth.ts b/nextjs-dashboard/auth.ts
+--- a/nextjs-dashboard/auth.ts	(revision f7af769c3a16c667dd3a0955a61b34aa3b45f073)
++++ b/nextjs-dashboard/auth.ts	(date 1739272858216)
+@@ -1,50 +1,40 @@
+-import NextAuth from "next-auth";
+-import { authConfig } from './auth.config';
++import NextAuth from 'next-auth';
+ import Credentials from 'next-auth/providers/credentials';
++import { authConfig } from './auth.config';
+ import { z } from 'zod';
+ import { sql } from '@vercel/postgres';
+ import type { User } from './app/database/definitiontype';
+-import bcrypt from  'bcrypt';
++import bcrypt from 'bcrypt';
+ 
+-//function to get user and login them in.
+-import { JWT } from "next-auth/jwt";
+-
+-export default {
+-    callbacks: {
+-        async jwt({ token, user }: { token: JWT; user?: User }) {
+-            if (user) {
+-                // Add custom user fields to the JWT token
+-                token.id = user.id;
+-                token.email = user.email;
+-            }
+-            return token;
+-        }
+-    }
+-};
+-
++async function getUser(email: string): Promise<User | undefined> {
++    try {
++        const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
++        return user.rows[0];
++    } catch (error) {
++        console.error('Failed to fetch user:', error);
++        throw new Error('Failed to fetch user.');
++    }
++}
+ 
+ export const { auth, signIn, signOut } = NextAuth({
+     ...authConfig,
+     providers: [
+-      Credentials({
+-          async authorize(credentials) {
+-              const parsedCredentials = z
+-                  .object({ email: z.string().email(), password: z.string().min(6) })
+-                  .safeParse(credentials);
+-  
+-              if (parsedCredentials.success) {
+-                  const { email, password } = parsedCredentials.data;
+-                  const user = await getUser(email);
+-                  if (!user) return null;
+-                  const passwordsMatch = await bcrypt.compare(password, user.password);
+-  
+-                  if (passwordsMatch) return user;
+-                  }
+-          
+-              console.log('Invalid Credentials');
+-              return null;
++        Credentials({
++            async authorize(credentials) {
++                const parsedCredentials = z
++                    .object({ email: z.string().email(), password: z.string().min(6) })
++                    .safeParse(credentials);
++
++                if (parsedCredentials.success) {
++                    const { email, password } = parsedCredentials.data;
++                    const user = await getUser(email);
++                    if (!user) return null;
++                    const passwordsMatch = await bcrypt.compare(password, user.password);
++                    if (passwordsMatch) return user;
++                }
++                console.log('Invalid credentials');
++                return null;
+             },
+         }),
+     ],
+-});
+-
++});
+\ No newline at end of file
+Index: nextjs-dashboard/auth.config.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import NextAuthConfig from 'next-auth';\r\n\r\n// @ts-ignore\r\n\r\nexport const authConfig = {\r\n    pages: {\r\n        signIn: \"/login\", // Custom login page if needed\r\n      },\r\n      session: {\r\n        strategy: \"jwt\", // Use JWT for session management\r\n    },\r\n    \r\n    callbacks: {\r\n\r\n        async jwt({ token, user }) {\r\n          if (user) {\r\n            // Add custom user fields to the JWT token\r\n            token.id = user.id;\r\n            token.email = user.email;\r\n            token.privilege = user.privilege;\r\n          }\r\n          return token;\r\n        },\r\n        async session({ session, token }) {\r\n          if (token) {\r\n            session.user.id = token.id;\r\n            session.user.email = token.email;\r\n            session.user.privilege = token.privilege;\r\n          }\r\n          return session;\r\n        },\r\n      },\r\n      secret: process.env.JWT_SECRET, // Use a secret for JWT signing\r\n    };\r\n\r\n
+===================================================================
+diff --git a/nextjs-dashboard/auth.config.ts b/nextjs-dashboard/auth.config.ts
+--- a/nextjs-dashboard/auth.config.ts	(revision f7af769c3a16c667dd3a0955a61b34aa3b45f073)
++++ b/nextjs-dashboard/auth.config.ts	(date 1739272049930)
+@@ -1,35 +1,21 @@
+-import NextAuthConfig from 'next-auth';
+-
+-// @ts-ignore
++import type { NextAuthConfig } from 'next-auth';
+ 
+ export const authConfig = {
+     pages: {
+-        signIn: "/login", // Custom login page if needed
+-      },
+-      session: {
+-        strategy: "jwt", // Use JWT for session management
++        signIn: '/login',
+     },
+-    
+     callbacks: {
+-
+-        async jwt({ token, user }) {
+-          if (user) {
+-            // Add custom user fields to the JWT token
+-            token.id = user.id;
+-            token.email = user.email;
+-            token.privilege = user.privilege;
+-          }
+-          return token;
+-        },
+-        async session({ session, token }) {
+-          if (token) {
+-            session.user.id = token.id;
+-            session.user.email = token.email;
+-            session.user.privilege = token.privilege;
+-          }
+-          return session;
++        authorized({ auth, request: { nextUrl } }) {
++            const isLoggedIn = !!auth?.user;
++            const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
++            if (isOnDashboard) {
++                if (isLoggedIn) return true;
++                return false; // Redirect unauthenticated users to login page
++            } else if (isLoggedIn) {
++                return Response.redirect(new URL('/dashboard', nextUrl));
++            }
++            return true;
+         },
+-      },
+-      secret: process.env.JWT_SECRET, // Use a secret for JWT signing
+-    };
+-
++    },
++    providers: [], // Add providers with an empty array for now
++} satisfies NextAuthConfig;
+\ No newline at end of file

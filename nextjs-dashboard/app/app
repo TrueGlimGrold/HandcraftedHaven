@@ -1,6 +1,0 @@
-<script>start("c:\\Users\\Luke\\Desktop\\School Projects\\Web Services\\HandcraftedHaven\\nextjs-dashboard\\app\\app\\");</script>
-<script>onHasParentDirectory();</script>
-<script>addRow("login","login",1,0,"0 B",1738473479,"2/1/25, 10:17:59 PM");</script>
-<script>addRow("product","product",1,0,"0 B",1738473479,"2/1/25, 10:17:59 PM");</script>
-<script>addRow("layout.tsx","layout.tsx",0,4685,"4.6 kB",1738469458,"2/1/25, 9:10:58 PM");</script>
-<script>addRow("page.tsx","page.tsx",0,163,"163 B",1738469458,"2/1/25, 9:10:58 PM");</script>

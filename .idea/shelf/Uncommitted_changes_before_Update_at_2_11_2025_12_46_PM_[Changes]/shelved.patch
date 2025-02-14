@@ -1,0 +1,123 @@
+Index: nextjs-dashboard/app/auth.config.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/app/auth.config.ts b/nextjs-dashboard/auth.config.ts
+rename from nextjs-dashboard/app/auth.config.ts
+rename to nextjs-dashboard/auth.config.ts
+--- a/nextjs-dashboard/app/auth.config.ts	(revision 51fdc9ea5ab5e8d1c43f512fd41779d23ce05054)
++++ b/nextjs-dashboard/auth.config.ts	(date 1739258107730)
+@@ -1,5 +1,8 @@
+-/*import NextAuthConfig from 'next-auth';
++import NextAuthConfig from 'next-auth';
+ 
++// @ts-ignore
++// @ts-ignore
++// @ts-ignore
+ export const authConfig = {
+     pages: {
+         signIn: "/login", // Custom login page if needed
+@@ -7,7 +10,9 @@
+       session: {
+         strategy: "jwt", // Use JWT for session management
+     },
++    
+     callbacks: {
++
+         async jwt({ token, user }) {
+           if (user) {
+             // Add custom user fields to the JWT token
+@@ -28,4 +33,4 @@
+       },
+       secret: process.env.JWT_SECRET, // Use a secret for JWT signing
+     };
+-*/
++
+Index: nextjs-dashboard/app/auth.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/app/auth.ts b/nextjs-dashboard/auth.ts
+rename from nextjs-dashboard/app/auth.ts
+rename to nextjs-dashboard/auth.ts
+--- a/nextjs-dashboard/app/auth.ts	(revision 51fdc9ea5ab5e8d1c43f512fd41779d23ce05054)
++++ b/nextjs-dashboard/auth.ts	(date 1739257742114)
+@@ -1,10 +1,10 @@
+-/*import NextAuth from "next-auth";
++import NextAuth from "next-auth";
+ import { authConfig } from './auth.config';
+ import Credentials from 'next-auth/providers/credentials';
+ import { z } from 'zod';
+ import { sql } from '@vercel/postgres';
+-import type { User } from '@/app/database/defitiontype';
+-import bcrypt from  'bcrypt';
++import type { User } from './app/database/definitiontype';
++import bcrypt from 'bcrypt';
+ 
+ //function to get user and login them in.
+ async function getUser(email: string): Promise<User |undefined> {
+@@ -25,16 +25,16 @@
+               const parsedCredentials = z
+                   .object({ email: z.string().email(), password: z.string().min(6) })
+                   .safeParse(credentials);
+-  
++
+               if (parsedCredentials.success) {
+                   const { email, password } = parsedCredentials.data;
+                   const user = await getUser(email);
+                   if (!user) return null;
+                   const passwordsMatch = await bcrypt.compare(password, user.password);
+-  
++
+                   if (passwordsMatch) return user;
+                   }
+-          
++
+               console.log('Invalid Credentials');
+               return null;
+             },
+@@ -42,4 +42,3 @@
+     ],
+ });
+ 
+-*/
+\ No newline at end of file
+Index: nextjs-dashboard/app/database/actions.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Contains the operations code for CRUD and calidation .\r\n\r\n\r\n'use server';\r\nimport { supabase } from './supabaseClient';\r\nimport bcrypt from 'bcryptjs';\r\n//import { z } from 'zod';\r\n//import { revalidatePath } from 'next/cache';\r\nimport { redirect } from 'next/navigation';\r\n//import { signIn } from '@/auth'; //Elisha Login\r\n// import { AuthError } from 'next-auth'; // Signups Autentication. This is commented out since we are using supabase authentication instead of next-auth.\r\n\r\nexport async function authenticate(prevState: string | undefined, formData: FormData) {\r\n    const email = formData.get('email') as string;\r\n    const password = formData.get('password') as string;\r\n\r\n    console.log('Attempting to authenticate with email:', email); //1. log email\r\n\r\n    try {\r\n        //authenticate with Supabase\r\n        //const { data, error } = await supabase.auth.signInWithPassword({email, password,});\r\n\r\n       /* if (error) {\r\n            console.log('Authentication successful. Fetching user role...'); //2. log success\r\n            throw error;\r\n        }*/\r\n        type UserType = {\r\n            privilege: string;\r\n            password: string;\r\n        };\r\n        //fetch user role from Users table\r\n        const { data: userData, error: userError } = await supabase\r\n            .from('users')\r\n            .select('privilege')\r\n            .eq('email', email)\r\n            .single() as { data: UserType | null, error: any};\r\n\r\n        if (userError || !userData) {\r\n            console.log('Error fetching user role:', userError?.message); //3. log user role error\r\n\r\n            return 'Invalid credentials';\r\n            //throw userError;\r\n        }\r\n\r\n        //compare the input password with the stored hashed password\r\n        const isPasswordValid = await bcrypt.compare(password, userData.password);\r\n        if (!isPasswordValid) {\r\n            console.log('Invalid password attempt');\r\n            return 'Wrong password';\r\n        }\r\n        console.log('User role fetched:', userData.privilege); //4. log user role\r\n\r\n        //if successful redirect based on role\r\n        if (userData.privilege === 'Seller') {\r\n            console.log('Redirecting to /edit-product.....') //5. log redirect\r\n            redirect('edit-product'); //redirect seller or admin to edit-product page.\r\n        } else {\r\n            console.log('Redirecting to home....'); //6. log redirect\r\n            redirect('/HCH-Home/shop'); //Redirect normal users to home page\r\n        }\r\n    } catch (error) {\r\n        //handle supabase specific error here\r\n        if (error instanceof Error) {\r\n            console.log('error caught:', error.message); // 7. log caught error\r\n            switch (error.message) {\r\n                case 'Invalid Login credentials':\r\n                    return 'Invalid credentials.';\r\n                default:\r\n                    return 'Something went wrong.';\r\n            }\r\n        }\r\n        return 'An unexpected error occured.';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/app/database/actions.tsx b/nextjs-dashboard/app/database/actions.tsx
+--- a/nextjs-dashboard/app/database/actions.tsx	(revision 51fdc9ea5ab5e8d1c43f512fd41779d23ce05054)
++++ b/nextjs-dashboard/app/database/actions.tsx	(date 1739257807335)
+@@ -1,14 +1,13 @@
+ // Contains the operations code for CRUD and calidation .
+ 
+-
+ 'use server';
+ import { supabase } from './supabaseClient';
+ import bcrypt from 'bcryptjs';
+-//import { z } from 'zod';
++import { z } from 'zod';
+ //import { revalidatePath } from 'next/cache';
+ import { redirect } from 'next/navigation';
+-//import { signIn } from '@/auth'; //Elisha Login
+-// import { AuthError } from 'next-auth'; // Signups Autentication. This is commented out since we are using supabase authentication instead of next-auth.
++import { signIn } from '@/auth'; //Elisha Login
++//import { AuthError } from 'next-auth'; // Signups Autentication. This is commented out since we are using supabase authentication instead of next-auth.
+ 
+ export async function authenticate(prevState: string | undefined, formData: FormData) {
+     const email = formData.get('email') as string;
+@@ -34,7 +33,7 @@
+             .select('privilege')
+             .eq('email', email)
+             .single() as { data: UserType | null, error: any};
+-
++ 
+         if (userError || !userData) {
+             console.log('Error fetching user role:', userError?.message); //3. log user role error
+ 

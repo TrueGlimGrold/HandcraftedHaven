@@ -1,0 +1,214 @@
+Index: nextjs-dashboard/package.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"name\": \"nextjs-dashboard\",\r\n  \"version\": \"0.1.0\",\r\n  \"private\": true,\r\n  \"scripts\": {\r\n    \"dev\": \"next dev\",\r\n    \"build\": \"next build\",\r\n    \"start\": \"next start\",\r\n    \"lint\": \"next lint\"\r\n  },\r\n  \"dependencies\": {\r\n    \"next\": \"15.1.6\",\r\n    \"react\": \"^19.0.0\",\r\n    \"react-dom\": \"^19.0.0\",\r\n    \"typescript\": \"^5.7.3\"\r\n  },\r\n  \"devDependencies\": {\r\n    \"@eslint/eslintrc\": \"^3\",\r\n    \"@types/node\": \"^20\",\r\n    \"@types/react\": \"^19.0.8\",\r\n    \"@types/react-dom\": \"^19.0.3\",\r\n    \"eslint\": \"^9\",\r\n    \"eslint-config-next\": \"15.1.6\"\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/package.json b/nextjs-dashboard/package.json
+--- a/nextjs-dashboard/package.json	(revision c5ad5db1d5ba02a57dc42b4419cf9f255929188b)
++++ b/nextjs-dashboard/package.json	(date 1738949154061)
+@@ -9,7 +9,11 @@
+     "lint": "next lint"
+   },
+   "dependencies": {
+-    "next": "15.1.6",
++    "@vercel/postgres": "^0.10.0",
++    "auth": "^1.2.3",
++    "bcrypt": "^5.1.1",
++    "next": "^15.1.6",
++    "next-auth": "^4.24.11",
+     "react": "^19.0.0",
+     "react-dom": "^19.0.0",
+     "typescript": "^5.7.3"
+Index: nextjs-dashboard/auth.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/auth.ts b/nextjs-dashboard/auth.ts
+new file mode 100644
+--- /dev/null	(date 1738949591147)
++++ b/nextjs-dashboard/auth.ts	(date 1738949591147)
+@@ -0,0 +1,40 @@
++import NextAuth from 'next-auth';
++import Credentials from 'next-auth/providers/credentials';
++import { authConfig } from './auth.config';
++import { z } from 'zod';
++import { sql } from '@vercel/postgres';
++import type { user } from '@/app/database/definitiontype';
++import bcrypt from 'bcrypt';
++
++async function getUser(email: string): Promise<user | undefined> {
++    try {
++        const user = await sql<user>`SELECT * FROM users WHERE email=${email}`;
++        return user.rows[0];
++    } catch (error) {
++        console.error('Failed to fetch user:', error);
++        throw new Error('Failed to fetch user.');
++    }
++}
++
++export const { auth, signIn, signOut } = NextAuth({
++    ...authConfig,
++    providers: [
++        Credentials({
++            async authorize(credentials) {
++                const parsedCredentials = z
++                    .object({ email: z.string().email(), password: z.string().min(6) })
++                    .safeParse(credentials);
++
++                if (parsedCredentials.success) {
++                    const { email, password } = parsedCredentials.data;
++                    const user = await getUser(email);
++                    if (!user) return null;
++                    const passwordsMatch = await bcrypt.compare(password, user.password);
++                    if (passwordsMatch) return user;
++                }
++                console.log('Invalid credentials');
++                return null;
++            },
++        }),
++    ],
++});
+\ No newline at end of file
+Index: nextjs-dashboard/auth.config.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/auth.config.ts b/nextjs-dashboard/auth.config.ts
+new file mode 100644
+--- /dev/null	(date 1738949076837)
++++ b/nextjs-dashboard/auth.config.ts	(date 1738949076837)
+@@ -0,0 +1,21 @@
++import type { NextAuthConfig } from 'next-auth';
++
++export const authConfig = {
++    pages: {
++        signIn: '/login',
++    },
++    callbacks: {
++        authorized({ auth, request: { nextUrl } }) {
++            const isLoggedIn = !!auth?.user;
++            const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
++            if (isOnDashboard) {
++                if (isLoggedIn) return true;
++                return false; // Redirect unauthenticated users to login page
++            } else if (isLoggedIn) {
++                return Response.redirect(new URL('/dashboard', nextUrl));
++            }
++            return true;
++        },
++    },
++    providers: [], // Add providers with an empty array for now
++} satisfies NextAuthConfig;
+\ No newline at end of file
+Index: nextjs-dashboard/next.config.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import type { NextConfig } from \"next\";\r\n\r\nconst nextConfig: NextConfig = {\r\n  /* config options here */\r\n  reactStrictMode: true,\r\n};\r\n\r\nexport default nextConfig;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/next.config.ts b/nextjs-dashboard/next.config.ts
+--- a/nextjs-dashboard/next.config.ts	(revision c5ad5db1d5ba02a57dc42b4419cf9f255929188b)
++++ b/nextjs-dashboard/next.config.ts	(date 1738949165581)
+@@ -1,8 +1,10 @@
+-import type { NextConfig } from "next";
++import type { NextConfig } from 'next';
+ 
+ const nextConfig: NextConfig = {
+   /* config options here */
+-  reactStrictMode: true,
++  experimental: {
++    ppr: 'incremental'
++  }
+ };
+ 
+ export default nextConfig;
+Index: nextjs-dashboard/app/database/utils.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/app/database/utils.ts b/nextjs-dashboard/app/database/utils.ts
+new file mode 100644
+--- /dev/null	(date 1738949446044)
++++ b/nextjs-dashboard/app/database/utils.ts	(date 1738949446044)
+@@ -0,0 +1,57 @@
++import { user } from './definitiontype';
++
++export const formatCurrency = (amount: number) => {
++    return (amount / 100).toLocaleString('en-US', {
++        style: 'currency',
++        currency: 'USD',
++    });
++};
++
++export const formatDateToLocal = (
++    dateStr: string,
++    locale: string = 'en-US',
++) => {
++    const date = new Date(dateStr);
++    const options: Intl.DateTimeFormatOptions = {
++        day: 'numeric',
++        month: 'short',
++        year: 'numeric',
++    };
++    const formatter = new Intl.DateTimeFormat(locale, options);
++    return formatter.format(date);
++};
++
++
++
++export const generatePagination = (currentPage: number, totalPages: number) => {
++    // If the total number of pages is 7 or less,
++    // display all pages without any ellipsis.
++    if (totalPages <= 7) {
++        return Array.from({ length: totalPages }, (_, i) => i + 1);
++    }
++
++    // If the current page is among the first 3 pages,
++    // show the first 3, an ellipsis, and the last 2 pages.
++    if (currentPage <= 3) {
++        return [1, 2, 3, '...', totalPages - 1, totalPages];
++    }
++
++    // If the current page is among the last 3 pages,
++    // show the first 2, an ellipsis, and the last 3 pages.
++    if (currentPage >= totalPages - 2) {
++        return [1, 2, '...', totalPages - 2, totalPages - 1, totalPages];
++    }
++
++    // If the current page is somewhere in the middle,
++    // show the first page, an ellipsis, the current page and its neighbors,
++    // another ellipsis, and the last page.
++    return [
++        1,
++        '...',
++        currentPage - 1,
++        currentPage,
++        currentPage + 1,
++        '...',
++        totalPages,
++    ];
++};
+Index: nextjs-dashboard/app/database/definitiontype.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//Containst Type definitions\r\n\r\nexport type User = {\r\n    id: string;\r\n    name: string;\r\n    email: string;\r\n    password: string;\r\n    privilege: \"User\"| \"Seller\"|\"Admin\";  //Elisha Logic\r\n};\r\n\r\nexport type product = {\r\n    id: string;\r\n    product_name: string;\r\n    image_url: string;\r\n    rating: \"1/5\" | \"2/5\" | \"3/5\" | \"4/5\" | \"5/5\"; // Ensures rating is within the 5/5 system\r\n    age: `${number}${number}${number}${number}`; // Enforces a 4-digit year format\r\n    artist: string;\r\n    style: string;\r\n    category: string;\r\n    price: number;\r\n    status: \"On Sale\" | \"Not For Sale\" | \"Sold\"; // Ensures only these two statuses are allowed\r\n    description: string; // Limit to 300 words when assigning a value\r\n    reviews?: string; // Optional field\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/app/database/definitiontype.ts b/nextjs-dashboard/app/database/definitiontype.ts
+--- a/nextjs-dashboard/app/database/definitiontype.ts	(revision c5ad5db1d5ba02a57dc42b4419cf9f255929188b)
++++ b/nextjs-dashboard/app/database/definitiontype.ts	(date 1738949356255)
+@@ -1,6 +1,6 @@
+ //Containst Type definitions
+ 
+-export type User = {
++export type user = {
+     id: string;
+     name: string;
+     email: string;

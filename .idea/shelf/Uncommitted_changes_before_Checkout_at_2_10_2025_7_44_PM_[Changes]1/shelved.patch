@@ -1,0 +1,58 @@
+Index: nextjs-dashboard/app/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import AcmeLogo from '@/app/ui/acme-logo';\r\nimport { ArrowRightIcon } from '@heroicons/react/24/outline';\r\nimport Link from 'next/link';\r\nimport styles from '@/app/ui/home.module.css';\r\nimport { lusitana } from '@/app/ui/fonts';\r\nimport Image from 'next/image';\r\nexport default function Page() {\r\n  return (\r\n    <main className=\"flex min-h-screen flex-col p-6\">\r\n      <div className=\"flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52\">\r\n         <AcmeLogo />\r\n      </div>\r\n      <div className=\"mt-4 flex grow flex-col gap-4 md:flex-row\">\r\n        <div className=\"flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20\">\r\n          <div\r\n              className={styles.shape}/>\r\n          <p className={`${lusitana.className}text-xl text-gray-800 md:text-3xl md:leading-normal`}>\r\n            <strong>Welcome to Acme.</strong> This is the example for the{' '}\r\n            <a href=\"https://nextjs.org/learn/\" className=\"text-blue-500\">\r\n              Next.js Learn Course\r\n            </a>\r\n            , brought to you by Vercel.\r\n          </p>\r\n          <Link\r\n              href=\"/login\"\r\n              className=\"flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base\"\r\n          >\r\n            <span>Log in</span> <ArrowRightIcon className=\"w-5 md:w-6\"/>\r\n          </Link>\r\n        </div>\r\n        <div className=\"flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12\">\r\n          {/* Add Hero Images Here */}\r\n            <Image\r\n                src=\"/hero-desktop.png\"\r\n                width={1000}\r\n                height={760}\r\n                className=\"hidden md:block\"\r\n                alt=\"Screenshots of the dashboard project showing desktop version\"\r\n            />\r\n              <Image\r\n                src=\"/hero-mobile.png\"\r\n                width={560}\r\n                height={620}\r\n                className=\"hidden md:block\"\r\n                alt=\"Screenshot of the dashboard project showing mobile version\"\r\n              />\r\n\r\n        </div>\r\n      </div>\r\n    </main>\r\n  );\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/app/page.tsx b/nextjs-dashboard/app/page.tsx
+--- a/nextjs-dashboard/app/page.tsx	(revision 0e78c3ca2134fb96c2c06320c436e128def06df8)
++++ b/nextjs-dashboard/app/page.tsx	(date 1739196877047)
+@@ -4,6 +4,8 @@
+ import styles from '@/app/ui/home.module.css';
+ import { lusitana } from '@/app/ui/fonts';
+ import Image from 'next/image';
++import herod from './public/hero-desktop.png';
++import herom from './public/hero-mobile.png';
+ export default function Page() {
+   return (
+     <main className="flex min-h-screen flex-col p-6">
+@@ -31,14 +33,14 @@
+         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
+           {/* Add Hero Images Here */}
+             <Image
+-                src="/hero-desktop.png"
++                src={herod}
+                 width={1000}
+                 height={760}
+                 className="hidden md:block"
+                 alt="Screenshots of the dashboard project showing desktop version"
+             />
+               <Image
+-                src="/hero-mobile.png"
++                src={herom}
+                 width={560}
+                 height={620}
+                 className="hidden md:block"
+Index: nextjs-dashboard/package.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"private\": true,\r\n  \"scripts\": {\r\n    \"build\": \"next build\",\r\n    \"dev\": \"next dev --turbopack\",\r\n    \"start\": \"next start\",\r\n    \"lint\": \"next lint\"\r\n  },\r\n  \"dependencies\": {\r\n    \"@heroicons/react\": \"^2.2.0\",\r\n    \"@tailwindcss/forms\": \"^0.5.9\",\r\n    \"@vercel/postgres\": \"^0.10.0\",\r\n    \"autoprefixer\": \"10.4.20\",\r\n    \"bcrypt\": \"^5.1.1\",\r\n    \"clsx\": \"^2.1.1\",\r\n    \"next\": \"^15.1.6\",\r\n    \"next-auth\": \"^5.0.0-beta.25\",\r\n    \"pnpm\": \"^9.15.5\",\r\n    \"postcss\": \"8.4.49\",\r\n    \"postgres\": \"^3.4.5\",\r\n    \"react\": \"19.0.0\",\r\n    \"react-dom\": \"19.0.0\",\r\n    \"tailwindcss\": \"3.4.16\",\r\n    \"typescript\": \"5.7.2\",\r\n    \"use-debounce\": \"^10.0.4\",\r\n    \"zod\": \"^3.23.8\"\r\n  },\r\n  \"devDependencies\": {\r\n    \"@types/bcrypt\": \"^5.0.2\",\r\n    \"@types/node\": \"22.10.1\",\r\n    \"@types/react\": \"19.0.0\",\r\n    \"@types/react-dom\": \"19.0.0\",\r\n    \"eslint\": \"^9.19.0\",\r\n    \"eslint-plugin-jsx-a11y\": \"^6.10.2\"\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/package.json b/nextjs-dashboard/package.json
+--- a/nextjs-dashboard/package.json	(revision 0e78c3ca2134fb96c2c06320c436e128def06df8)
++++ b/nextjs-dashboard/package.json	(date 1739196877062)
+@@ -30,7 +30,10 @@
+     "@types/node": "22.10.1",
+     "@types/react": "19.0.0",
+     "@types/react-dom": "19.0.0",
++    "@vercel/postgres": "^0.10.0",
+     "eslint": "^9.19.0",
+-    "eslint-plugin-jsx-a11y": "^6.10.2"
++    "eslint-config-next": "15.1.6",
++    "eslint-plugin-jsx-a11y": "^6.10.2",
++    "use-debounce": "^10.0.4"
+   }
+ }

@@ -1,0 +1,165 @@
+Index: nextjs-dashboard/app/login/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { Suspense } from 'react';\r\nimport { Metadata } from 'next';\r\nimport React from 'react';\r\nimport Link from 'next/link';\r\nimport \"@/styles/globals.css\";\r\n\r\nexport const metadata: Metadata = {\r\n    title: 'Login',\r\n};\r\n\r\nimport LoginForm from '@/app/ui/login-form';\r\n\r\nexport default function LoginPage() {\r\n  return (\r\n    <Suspense>\r\n      <LoginForm />\r\n    </Suspense>\r\n  );\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/app/login/page.tsx b/nextjs-dashboard/app/login/page.tsx
+--- a/nextjs-dashboard/app/login/page.tsx	(revision 14e64172bc2a1dde3b418a60d5560fba914d1d7d)
++++ b/nextjs-dashboard/app/login/page.tsx	(date 1739176789228)
+@@ -1,7 +1,7 @@
+ import { Suspense } from 'react';
+ import { Metadata } from 'next';
+ import React from 'react';
+-import Link from 'next/link';
++// import Link from 'next/link';
+ import "@/styles/globals.css";
+ 
+ export const metadata: Metadata = {
+Index: nextjs-dashboard/app/layout.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import Link from \"next/link\";\r\nimport \"../styles/globals.css\";\r\nimport { ReactNode } from \"react\";\r\n\r\nexport const metadata = {\r\n  title: \"Handcrafted Haven\",\r\n  description: \"A curated collection of artisanal and handmade products to enrich your life.\",\r\n};\r\n\r\nexport default function RootLayout({\r\n  children,\r\n}: {\r\n  children: ReactNode;\r\n}) {\r\n  return (\r\n    <html lang=\"en\">\r\n\r\n      <head>\r\n        <style>\r\n        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');\r\n        </style>\r\n      </head>\r\n      <body className=\"\">\r\n        <header className=\"\">\r\n          <div className=\"\">\r\n            <h1 className=\"roboto title header-title\">Handcrafted Haven</h1>\r\n            <nav className=\"header-links\">\r\n              <Link href=\"/\" className=\"inter\">Theme ☀\uFE0F/\uD83C\uDF11</Link> {/*This has to be a button / toggle for theme swtiching to day or night*/}\r\n              <Link href=\"/HCH-Home/shop/home\" className=\"inter\">Home</Link>\r\n              <Link href=\"/HCH-Home/shop\" className=\"inter\">Shop</Link>\r\n              <Link href=\"/login\" className=\"inter\">Login\uD83E\uDD35</Link>\r\n            </nav>\r\n          </div>\r\n        </header>\r\n        <main className=\"\">\r\n          {children}\r\n        </main>\r\n        <footer className=\"\">\r\n          <h1 className=\"roboto title footer-title\">Handcrafted Haven</h1>\r\n          <div className=\"footer-bottom\">\r\n            <p className=\"inter copyright\">&copy; Handcrafted Haven {new Date().getFullYear()} | WDD430</p>\r\n            <p className=\"inter\"> Become A Seller</p>\r\n            <Link href=\"/\" className=\"inter\">About Us</Link>\r\n            <Link href=\"/\" className=\"inter\">Theme ☀\uFE0F/\uD83C\uDF11</Link>\r\n          </div>\r\n        </footer>\r\n      </body>\r\n    </html>\r\n\r\n    // Logged in user\r\n\r\n    // <html lang=\"en\">\r\n    // <style>\r\n    // @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');\r\n    // </style>\r\n    // <body className=\"\">\r\n    //   <header className=\"\">\r\n    //     <div className=\"\">\r\n    //       <Link href=\"/\" className=\"roboto title header-title\">Theme ☀\uFE0F/\uD83C\uDF11</Link>\r\n    //       <h1 className=\"\">Handcrafted Haven</h1>\r\n    //       <nav className=\"header-links\">\r\n    //         <Link href=\"/\" className=\"inter\">Artist</Link>\r\n    //         <Link href=\"/\" className=\"inter\">Price</Link>\r\n    //         <Link href=\"/\" className=\"inter\">Age(Time)</Link>\r\n    //         <Link href=\"/\" className=\"inter\">Category</Link>\r\n    //       </nav>\r\n    //       <nav className=\"\">\r\n    //        <Link href=\"/\" className=\"inter\">\r\n    //          <p>\uD83C\uDFE0</p>\r\n    //          <p>Home</p>\r\n    //        </Link>\r\n    //        <Link href=\"/\" className=\"inter\">\r\n    //          <p>\uD83D\uDED2</p>\r\n    //          <p>Shop</p>\r\n    //        </Link>\r\n    //        <Link href=\"/\" className=\"inter\">\r\n    //          <p>\uD83E\uDD35</p>\r\n    //          <p>Shop</p>\r\n    //        </Link>\r\n    //       </nav>\r\n    //     </div>\r\n    //   </header>\r\n    //   <main className=\"\">\r\n    //     {children}\r\n    //   </main>\r\n    //   <footer className=\"\">\r\n    //     <h1 className=\"roboto title footer-title\">Handcrafted Haven</h1>\r\n    //     <div className=\"footer-bottom\">\r\n    //       <p className=\"inter copyright\">&copy; Handcrafted Haven {new Date().getFullYear()} | WDD430</p>\r\n    //       <p className=\"inter\"> Become A Seller</p>\r\n    //       <Link href=\"/\" className=\"inter\"> About Us</Link>\r\n    //       <Link href=\"/\" className=\"inter\"> Theme ☀\uFE0F/\uD83C\uDF11</Link>\r\n    //     </div>\r\n    //   </footer>\r\n    // </body>\r\n    // </html>\r\n\r\n    // Logged in administrator\r\n\r\n    // <html lang=\"en\">\r\n    // <style>\r\n    // @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');\r\n    // </style>\r\n    // <body className=\"\">\r\n    //   <header className=\"\">\r\n    //     <div className=\"\">\r\n    //       <Link href=\"/\" className=\"inter\">Theme ☀\uFE0F/\uD83C\uDF11</Link>\r\n    //       <h1 className=\"roboto title header-title\">Handcrafted Haven</h1>\r\n    //       <nav className=\"\">\r\n    //         <Link href=\"/\" className=\"inter\">My Products</Link>\r\n    //         <Link href=\"/\" className=\"inter\">Reveiws</Link>\r\n    //         <Link href=\"/\" className=\"inter\">Manage</Link>\r\n    //         <Link href=\"/\" className=\"inter\">Category</Link>\r\n    //       </nav>\r\n    //       <nav className=\"\">\r\n    //        <Link href=\"/\" className=\"inter\">\r\n    //          <p>\uD83C\uDFE0</p>\r\n    //          <p>Home</p>\r\n    //        </Link>\r\n    //        <Link href=\"/\" className=\"inter\">\r\n    //          <p>\uD83D\uDED2</p>\r\n    //          <p>Shop</p>\r\n    //        </Link>\r\n    //        <Link href=\"/\" className=\"inter\">\r\n    //          <p>\uD83E\uDD35</p>\r\n    //          <p>Shop</p>\r\n    //        </Link>\r\n    //       </nav>\r\n    //     </div>\r\n    //   </header>\r\n    //   <main className=\"\">\r\n    //     {children}\r\n    //   </main>\r\n    //   <footer className=\"\">\r\n    //     <h1 className=\"roboto title footer-title\">Handcrafted Haven</h1>\r\n    //     <div className=\"footer-bottom\">\r\n    //       <p className=\"inter copyright\">&copy; Handcrafted Haven {new Date().getFullYear()} | WDD430</p>\r\n    //       <p className=\"inter\"> Become A Seller</p>\r\n    //       <Link href=\"/\" className=\"inter\"> About Us</Link>\r\n    //       <Link href=\"/\" className=\"inter\"> Theme ☀\uFE0F/\uD83C\uDF11</Link>\r\n    //     </div>\r\n    //   </footer>\r\n    // </body>\r\n    // </html>\r\n  );\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/app/layout.tsx b/nextjs-dashboard/app/layout.tsx
+--- a/nextjs-dashboard/app/layout.tsx	(revision 14e64172bc2a1dde3b418a60d5560fba914d1d7d)
++++ b/nextjs-dashboard/app/layout.tsx	(date 1739177069249)
+@@ -49,98 +49,5 @@
+ 
+     // Logged in user
+ 
+-    // <html lang="en">
+-    // <style>
+-    // @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+-    // </style>
+-    // <body className="">
+-    //   <header className="">
+-    //     <div className="">
+-    //       <Link href="/" className="roboto title header-title">Theme ☀️/🌑</Link>
+-    //       <h1 className="">Handcrafted Haven</h1>
+-    //       <nav className="header-links">
+-    //         <Link href="/" className="inter">Artist</Link>
+-    //         <Link href="/" className="inter">Price</Link>
+-    //         <Link href="/" className="inter">Age(Time)</Link>
+-    //         <Link href="/" className="inter">Category</Link>
+-    //       </nav>
+-    //       <nav className="">
+-    //        <Link href="/" className="inter">
+-    //          <p>🏠</p>
+-    //          <p>Home</p>
+-    //        </Link>
+-    //        <Link href="/" className="inter">
+-    //          <p>🛒</p>
+-    //          <p>Shop</p>
+-    //        </Link>
+-    //        <Link href="/" className="inter">
+-    //          <p>🤵</p>
+-    //          <p>Shop</p>
+-    //        </Link>
+-    //       </nav>
+-    //     </div>
+-    //   </header>
+-    //   <main className="">
+-    //     {children}
+-    //   </main>
+-    //   <footer className="">
+-    //     <h1 className="roboto title footer-title">Handcrafted Haven</h1>
+-    //     <div className="footer-bottom">
+-    //       <p className="inter copyright">&copy; Handcrafted Haven {new Date().getFullYear()} | WDD430</p>
+-    //       <p className="inter"> Become A Seller</p>
+-    //       <Link href="/" className="inter"> About Us</Link>
+-    //       <Link href="/" className="inter"> Theme ☀️/🌑</Link>
+-    //     </div>
+-    //   </footer>
+-    // </body>
+-    // </html>
+-
+-    // Logged in administrator
+-
+-    // <html lang="en">
+-    // <style>
+-    // @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+-    // </style>
+-    // <body className="">
+-    //   <header className="">
+-    //     <div className="">
+-    //       <Link href="/" className="inter">Theme ☀️/🌑</Link>
+-    //       <h1 className="roboto title header-title">Handcrafted Haven</h1>
+-    //       <nav className="">
+-    //         <Link href="/" className="inter">My Products</Link>
+-    //         <Link href="/" className="inter">Reveiws</Link>
+-    //         <Link href="/" className="inter">Manage</Link>
+-    //         <Link href="/" className="inter">Category</Link>
+-    //       </nav>
+-    //       <nav className="">
+-    //        <Link href="/" className="inter">
+-    //          <p>🏠</p>
+-    //          <p>Home</p>
+-    //        </Link>
+-    //        <Link href="/" className="inter">
+-    //          <p>🛒</p>
+-    //          <p>Shop</p>
+-    //        </Link>
+-    //        <Link href="/" className="inter">
+-    //          <p>🤵</p>
+-    //          <p>Shop</p>
+-    //        </Link>
+-    //       </nav>
+-    //     </div>
+-    //   </header>
+-    //   <main className="">
+-    //     {children}
+-    //   </main>
+-    //   <footer className="">
+-    //     <h1 className="roboto title footer-title">Handcrafted Haven</h1>
+-    //     <div className="footer-bottom">
+-    //       <p className="inter copyright">&copy; Handcrafted Haven {new Date().getFullYear()} | WDD430</p>
+-    //       <p className="inter"> Become A Seller</p>
+-    //       <Link href="/" className="inter"> About Us</Link>
+-    //       <Link href="/" className="inter"> Theme ☀️/🌑</Link>
+-    //     </div>
+-    //   </footer>
+-    // </body>
+-    // </html>
+   );
+ }
+Index: nextjs-dashboard/app/database/actions.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Contains the operations code for CRUD and calidation .\r\n\r\n\r\n'use server';\r\nimport { supabase } from './supabaseClient';\r\nimport bcrypt from 'bcryptjs';\r\n//import { z } from 'zod';\r\n//import { revalidatePath } from 'next/cache';\r\nimport { redirect } from 'next/navigation';\r\n//import { signIn } from '@/auth'; //Elisha Login\r\n//import { AuthError } from 'next-auth'; // Signups Autentication. This is commented out since we are using supabase authentication instead of next-auth.\r\n\r\nexport async function authenticate(prevState: string | undefined, formData: FormData) {\r\n    const email = formData.get('email') as string;\r\n    const password = formData.get('password') as string;\r\n\r\n    console.log('Attempting to authenticate with email:', email); //1. log email\r\n\r\n    try {\r\n        //authenticate with Supabase\r\n        //const { data, error } = await supabase.auth.signInWithPassword({email, password,});\r\n\r\n       /* if (error) {\r\n            console.log('Authentication successful. Fetching user role...'); //2. log success\r\n            throw error;\r\n        }*/\r\n        type UserType = {\r\n            privilege: string;\r\n            password: string;\r\n        };\r\n        //fetch user role from Users table\r\n        const { data: userData, error: userError } = await supabase\r\n            .from('users')\r\n            .select('privilege')\r\n            .eq('email', email)\r\n            .single() as { data: UserType | null, error: any};\r\n\r\n        if (userError || !userData) {\r\n            console.log('Error fetching user role:', userError?.message); //3. log user role error\r\n\r\n            return 'Invalid credentials';\r\n            //throw userError;\r\n        }\r\n\r\n        //compare the input password with the stored hashed password\r\n        const isPasswordValid = await bcrypt.compare(password, userData.password);\r\n        if (!isPasswordValid) {\r\n            console.log('Invalid password attempt');\r\n            return 'Wrong password';\r\n        }\r\n        console.log('User role fetched:', userData.privilege); //4. log user role\r\n\r\n        //if successful redirect based on role\r\n        if (userData.privilege === 'Seller') {\r\n            console.log('Redirecting to /edit-product.....') //5. log redirect\r\n            redirect('edit-product'); //redirect seller or admin to edit-product page.\r\n        } else {\r\n            console.log('Redirecting to home....'); //6. log redirect\r\n            redirect('/HCH-Home/shop'); //Redirect normal users to home page\r\n        }\r\n    } catch (error) {\r\n        //handle supabase specific error here\r\n        if (error instanceof Error) {\r\n            console.log('error caught:', error.message); // 7. log caught error\r\n            switch (error.message) {\r\n                case 'Invalid Login credentials':\r\n                    return 'Invalid credentials.';\r\n                default:\r\n                    return 'Something went wrong.';\r\n            }\r\n        }\r\n        return 'An unexpected error occured.';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/app/database/actions.tsx b/nextjs-dashboard/app/database/actions.tsx
+--- a/nextjs-dashboard/app/database/actions.tsx	(revision 14e64172bc2a1dde3b418a60d5560fba914d1d7d)
++++ b/nextjs-dashboard/app/database/actions.tsx	(date 1739176743006)
+@@ -8,7 +8,7 @@
+ //import { revalidatePath } from 'next/cache';
+ import { redirect } from 'next/navigation';
+ //import { signIn } from '@/auth'; //Elisha Login
+-//import { AuthError } from 'next-auth'; // Signups Autentication. This is commented out since we are using supabase authentication instead of next-auth.
++// import { AuthError } from 'next-auth'; // Signups Autentication. This is commented out since we are using supabase authentication instead of next-auth.
+ 
+ export async function authenticate(prevState: string | undefined, formData: FormData) {
+     const email = formData.get('email') as string;
+Index: nextjs-dashboard/app/HCH-Home/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Code for the product info goes here where it contains\r\n// all information about the product name, bio,ratings,so on..\r\nimport Link from 'next/link';\r\nimport \"/styles/globals.css\";\r\nimport React from 'react';\r\n\r\nconst Page = () => {\r\n    return (\r\n        <>\r\n            <div style={{ maxWidth: \"800px\", margin: \"0 auto\", padding: \"20px\", textAlign: \"center\" }}>\r\n                <h1 style={{ fontSize: \"2rem\", fontWeight: \"bold\", marginBottom: \"16px\" }}>About Us</h1>\r\n                <p style={{ fontSize: \"1.125rem\", color: \"#4a4a4a\", marginBottom: \"24px\" }}>\r\n                    Welcome to our project! We are dedicated to building innovative solutions that\r\n                    solve real-world problems and enhance daily life. Our team is passionate about\r\n                    technology, creativity, and making a positive impact.\r\n                </p>\r\n                <h2 style={{ fontSize: \"1.5rem\", fontWeight: \"600\", marginBottom: \"12px\" }}>Our Mission</h2>\r\n                <p style={{ fontSize: \"1.125rem\", color: \"#4a4a4a\", marginBottom: \"24px\" }}>\r\n                    Our goal is to create software that simplifies tasks, improves efficiency, and\r\n                    empowers individuals and businesses to achieve their objectives. We believe in\r\n                    leveraging technology to drive meaningful change and provide value to our users.\r\n                </p>\r\n                <h2 style={{ fontSize: \"1.5rem\", fontWeight: \"600\", marginBottom: \"12px\" }}>Join Us</h2>\r\n                <p style={{ fontSize: \"1.125rem\", color: \"#4a4a4a\", marginBottom: \"24px\" }}>\r\n                    We are always looking for like-minded individuals to collaborate with. Whether\r\n                    you are a developer, designer, or enthusiast, we invite you to be part of our\r\n                    journey in shaping the future of technology.\r\n                </p>\r\n            </div>\r\n        </>\r\n    );\r\n}\r\n\r\nexport default Page;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/nextjs-dashboard/app/HCH-Home/page.tsx b/nextjs-dashboard/app/HCH-Home/page.tsx
+--- a/nextjs-dashboard/app/HCH-Home/page.tsx	(revision 14e64172bc2a1dde3b418a60d5560fba914d1d7d)
++++ b/nextjs-dashboard/app/HCH-Home/page.tsx	(date 1739176630722)
+@@ -1,6 +1,6 @@
+ // Code for the product info goes here where it contains
+ // all information about the product name, bio,ratings,so on..
+-import Link from 'next/link';
++// import Link from 'next/link';
+ import "/styles/globals.css";
+ import React from 'react';
+ 
